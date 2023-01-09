@@ -26,6 +26,8 @@ public class Enemy : MonoBehaviour
 
     private Animator animator;
 
+    public LayerMask layerMask;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -49,8 +51,6 @@ public class Enemy : MonoBehaviour
     {
         DrawFov();
 
-
-
         if (player)
         {
             target = null;
@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour
                 Vector2 dirToPlayer = (player.transform.position - transform.position).normalized;
                 if (Vector2.Angle(transform.up, dirToPlayer) < fov / 2f)
                 {
-                    RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, dirToPlayer, viewDistance);
+                    RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, dirToPlayer, viewDistance, layerMask);
                     if (hitInfo.collider != null)
                     {
                         if (hitInfo.collider.CompareTag("Player"))
@@ -147,6 +147,14 @@ public class Enemy : MonoBehaviour
         fieldOfView.SetOrigin(this.transform.position);
         fieldOfView.SetAimDirection(this.transform.up);
         //fieldOfView.SetAimDirection(moveDir);
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("Player"))
+        {
+            col.GetComponent<Player>().Die();
+        }
     }
 
 }
