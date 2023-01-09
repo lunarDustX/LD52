@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Listener
   layers:
   - Default
   - TransparentFX
@@ -46,4 +47,7 @@ TagManager:
     locked: 0
   - name: Characters
     uniqueID: 363732331
+    locked: 0
+  - name: UI
+    uniqueID: 2478505389
     locked: 0

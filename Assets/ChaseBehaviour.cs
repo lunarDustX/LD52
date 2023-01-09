@@ -18,14 +18,12 @@ public class ChaseBehaviour : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Transform enemyTrans = animator.transform;
 
-        //if (enemy == null)
-        //{
-        //    Debug.Log("Enemey NULL!!!!!");
-        //}
-
+        // update target position
         targetPosition = enemy.targetPosition;
+
+
+        Transform enemyTrans = animator.transform;
         if (Vector2.Distance(enemyTrans.position, targetPosition) > 0.1f)
         {
             enemyTrans.position = Vector2.MoveTowards(enemyTrans.position, targetPosition, chaseSpeed * Time.deltaTime);
@@ -33,6 +31,7 @@ public class ChaseBehaviour : StateMachineBehaviour
         }
         else
         {
+            //Debug.Log("to patrol");
             animator.SetBool("isPatrolling", true);
         }
     }

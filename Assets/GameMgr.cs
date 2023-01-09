@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GameMgr : MonoBehaviour
 {
+    UIMgr uiMgr;
     void Start()
     {
-        
+       uiMgr = FindObjectOfType<UIMgr>();
     }
 
     void Update()
@@ -18,13 +19,14 @@ public class GameMgr : MonoBehaviour
         }
     }
 
-    void Lose()
+    public void Lose()
     {
-
+        Debug.Log("Lose");
+        uiMgr.LoseUI();
     }
 
-    void Win()
+    public void Win()
     {
-
+        uiMgr.WinUI();
     }
 }

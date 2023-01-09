@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
 
         // init
-        targetPosition = transform.position;
+        SetTargetPosition(transform.position);
         moveDir = this.transform.up;
 
         player = GameObject.FindGameObjectWithTag("Player");
@@ -46,6 +46,30 @@ public class Enemy : MonoBehaviour
         }
     }
 
+
+    public void SetTargetPosition(Vector2 _pos)
+    {
+        this.targetPosition = _pos;
+    }
+
+    public void FoundSomething(GameObject _target)
+    {
+        Debug.Log("Found " + _target.name);
+
+        // 保证优先追玩家
+        if (target == player) return;
+
+        target = _target;
+        SetTargetPosition(target.transform.position);
+
+        Debug.Log(target.transform.position);
+
+        if (animator.GetBool("isChasing") == false)
+        {
+            animator.SetBool("isChasing", true);
+            Debug.Log("chasing true");
+        }
+    }
 
     private void Update()
     {
@@ -64,15 +88,10 @@ public class Enemy : MonoBehaviour
                     {
                         if (hitInfo.collider.CompareTag("Player"))
                         {
-                            Debug.Log("Found Player!");
 
-                            target = player;
-                            targetPosition = target.transform.position;
-
-                            if (animator.GetBool("isChasing")==false)
-                            {
-                                animator.SetBool("isChasing", true);
-                            }
+                            //target = player;
+                            //SetTargetPosition(target.transform.position);
+                            FoundSomething(player);
                         }
                         else
                         {
@@ -81,13 +100,13 @@ public class Enemy : MonoBehaviour
                     }
                 }
             }
-            if (target == null)
-            {
-                if (animator.GetBool("isChasing") == true)
-                {
-                    animator.SetBool("isChasing", false);
-                }
-            }
+            //if (target == null)
+            //{
+            //    if (animator.GetBool("isChasing") == true)
+            //    {
+            //        animator.SetBool("isChasing", false);
+            //    }
+            //}
         }
     }
 
